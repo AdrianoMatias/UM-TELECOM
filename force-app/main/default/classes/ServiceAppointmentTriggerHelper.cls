@@ -1,21 +1,13 @@
 public class ServiceAppointmentTriggerHelper {
-    public static Boolean isFieldServiceMobileUser() {
-        // Obtém o ID do usuário logado
+    // Função para verificar se o usuário está restrito a usar apenas o Field Service Mobile App
+    public static Boolean isUserRestrictedToFieldServiceApp() {
         Id currentUserId = UserInfo.getUserId();
+        System.debug('ID do usuário logado: ' + currentUserId);
         
-        UserAppInfo userAppInfo = [SELECT Id, AppDefinitionId FROM UserAppInfo WHERE UserId =:UserInfo.getUserId() ORDER BY LastModifiedDate DESC LIMIT 1];
+        // Obtém o usuário atual
+        User currentUser = [SELECT RestrictToFieldServiceApp__c FROM User WHERE Id = :currentUserId LIMIT 1];
         
-        AppDefinition appDefinition = [SELECT Label FROM AppDefinition Where DurableId =:userAppInfo.AppDefinitionId LIMIT 1];
-        String appName = appDefinition.Label;
-        
-        System.debug('appName------->' + appName);
-                
-        if (appName.contains('Field Service Mobile App')) {
-            return true;
-        } else {
-            return false;    
-        }
-        
-        
+        // Verifica se o campo RestrictToFieldServiceApp__c está marcado como TRUE
+        return currentUser.RestrictToFieldServiceApp__c;
     }
 }
