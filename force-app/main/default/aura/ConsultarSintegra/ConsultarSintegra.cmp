@@ -1,0 +1,13 @@
+<aura:component controller="ConsultarSintegraCTRL" implements="force:hasRecordId,force:lightningQuickActionWithoutHeader">
+
+    <aura:attribute name="mostrarSpinner" type="Boolean" default="false"/>
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    
+    <div class="slds-is-relative">
+        <aura:if isTrue="{!v.mostrarSpinner}">
+            <lightning:spinner alternativeText="Loading" size="medium" />
+        </aura:if>
+    </div>
+
+</aura:component>

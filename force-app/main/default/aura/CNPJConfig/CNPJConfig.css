@@ -1,0 +1,10 @@
+.THIS .alignInputField {
+	display         : flex;
+	align-items     : center;
+	justify-content : center;
+}
+
+.THIS .Teste {
+    margin-left     : 15px;
+    margin-right    : 15px;
+}

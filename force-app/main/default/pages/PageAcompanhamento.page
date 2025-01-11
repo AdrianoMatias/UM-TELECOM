@@ -1,0 +1,260 @@
+<apex:page showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" controller="ControllerAcompanhamento" lightningStyleSheets="true">    
+    <head>
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBjM2IxVPvv240wYj_3g3Y7fc9rcN6lvGw&language=pt-br"></script>
+        
+        <style type="text/css">
+            #map-canvas {
+            font-family: Arial;
+            font-size:12px;
+            height: 620px;
+            width: 100%;
+            background:transparent;
+            }
+    
+            .bPageBlock {
+            border: none !important;
+            margin-top: 20px !important;
+            border-top: none !important;
+            }
+    
+            .rich-tabhdr-cell-active {}
+    
+            .rich-tabpanel-content {
+            padding: 1px;
+    
+            }
+    
+            .separator{
+            border-bottom: 1px solid rgb(219, 219, 219);
+            height: 1px;
+            width: 100%;
+            margin-left: -23px;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            }
+    
+            .painelMensagens{
+            width: 33%;
+            position: absolute;
+            top: 45px;
+            left: 33%;
+            text-align: center;
+            }
+    
+            .filtro{
+            width: 275px;
+            position: absolute;
+            top: 60px;
+            left: 20px;
+            }
+
+            .rich-tab-header {
+            color: #000;
+            width: 110px;
+            font-size: 12px !important;
+            font-family: Arial,Verdana,sans-serif;
+            }
+    
+            .gm-style-iw {
+            width: 300px; 
+            }
+    
+            .infoWindow{
+            width: 600px; 
+            }
+    
+            .dateFormat{
+            margin-left: 5px !important;
+            }
+
+            .bPageBlock{
+            margin-top: 10px !important;
+            }            
+   
+        </style>
+    </head>
+
+    <body>
+        <apex:form >
+            <apex:outputPanel id="timerPanel">
+                <apex:actionPoller reRender="painelMensagem" interval="10" enabled="{!timer}" action="{!timerOff}"/> 
+            </apex:outputPanel>
+            <apex:pageBlock >
+                <apex:outputPanel id="painelMensagem" onclick="limparMensagem();">
+                    <div><apex:pageMessages id="mensagens" escape="false"/></div>
+                </apex:outputPanel>
+                <table width="60%">
+                    <tr>
+                        <td>
+                            <span>Usúarios</span> 
+                            <div style="margin-top: 5px;">
+                                <apex:selectList value="{!idUsuario}" size="1"> 
+                                    <apex:selectOptions value="{!usuarios}" />
+                                </apex:selectList>
+                            </div>
+                        </td>
+                        <td> 
+                            <span>Data Início</span>
+                            <div style="margin-top: 5px;"><apex:input type="date" value="{!dataInicio}"/></div>
+                        </td>
+                        <td>
+                            <span>Data Fim</span>
+                            <div style="margin-top: 5px;"><apex:input type="date" value="{!dataFim}"/></div>
+                        </td>
+                        <td>
+                            <div style="margin-top: 25px;"><apex:commandButton onclick="" action="{!carregarCompromissos}" value="Carregar"/></div>
+                        </td>
+                    </tr>
+                </table>
+
+                
+            </apex:pageBlock>
+        
+            <apex:pageBlock >
+                <apex:pageBlockSection columns="1" rendered="{!mostrarBlocoMapa}">
+                    <div id="map-canvas"></div>
+                    <div id="divJSON" style="visibility: hidden; height: 0px; overflow-y: scroll;">{!geolocalizacoesJson}</div>
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+        </apex:form>
+    </body>
+
+    <script type="text/javascript">
+        var mapOptions = {
+            zoom: 3,
+            minZoom: 3,
+            maxZoom: 17,
+            center: new google.maps.LatLng(13.662001,-44.121094),
+            mapTypeId: 'roadmap'
+        };
+
+        var map;
+        var markerBounds;
+        var markers = [];
+        var infoWindows = [];
+        var markerRaio;
+        var circleRaio;
+
+        window.onload = function() {
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            var strJson = document.getElementById("divJSON").innerHTML;
+            console.log(strJson);
+
+            if(strJson){
+                var listaMarkersJson = JSON.parse(strJson);
+
+                if(listaMarkersJson.length<1) {
+                    alert('Nenhum compromisso encontrado.');
+                }
+                
+                var primeiraLocalizacao;
+                for(var i=0;i<listaMarkersJson.length;i++){
+                    var objetoMarker = listaMarkersJson[i];
+                    var latLng = new google.maps.LatLng(objetoMarker.latitude, objetoMarker.longitude);
+                    var pinImage;
+                    if(objetoMarker.cor=='verde'){
+                            pinImage = new google.maps.MarkerImage('https://maps.google.com/mapfiles/ms/icons/green-dot.png');
+                        }else if(objetoMarker.cor=='azul'){
+                            pinImage = new google.maps.MarkerImage('https://maps.google.com/mapfiles/ms/icons/blue-dot.png');
+                        }else if(objetoMarker.cor=='amarelo'){
+                            pinImage = new google.maps.MarkerImage('https://maps.google.com/mapfiles/ms/icons/yellow-dot.png');
+                        }else if(objetoMarker.cor=='vermelho'){
+                            pinImage = new google.maps.MarkerImage('https://maps.google.com/mapfiles/ms/icons/red-dot.png');
+                        }
+                    var marker = new google.maps.Marker({
+                        position: latLng,
+                        icon: pinImage
+                    });
+                    markers.push(marker);
+                    if(i==0)primeiraLocalizacao=latLng;
+                    if(objetoMarker.identificador=='Oportunidade') {
+                        var content = '<div class="infoWindow">';
+                        content+='Nome Conta: ' + objetoMarker.conta + '<br>';
+                        content+='Nome Oportunidade: ' + objetoMarker.oportunidade + '<br>';
+                        content+='Data Compromisso: ' + objetoMarker.dataCompromisso + '<br>';
+                        if(objetoMarker.dataCheckIn != null) {
+                            content+='Data Check-In: ' + objetoMarker.dataCheckIn + '<br>';
+                        }
+                        content+='Status Compromisso: ' + objetoMarker.status + '<br>';
+                        content+='Link: ' + '<a href="'+objetoMarker.link+'">' + objetoMarker.nomeCompromisso + '</a>' + '<br>';
+                        content += '</div>';
+
+                    } else if(objetoMarker.identificador=='Conta') {
+                        var content = '<div class="infoWindow">';
+                        content+='Nome Conta: ' + objetoMarker.conta + '<br>';
+                        content+='Data Compromisso: ' + objetoMarker.dataCompromisso + '<br>';
+                        if(objetoMarker.dataCheckIn != null) {
+                            content+='Data Check-In: ' + objetoMarker.dataCheckIn + '<br>';
+                        }
+                        content+='Status Compromisso: ' + objetoMarker.status + '<br>';
+                        content+='Link: ' + '<a href="'+objetoMarker.link+'">' + objetoMarker.nomeCompromisso + '</a>' + '<br>';
+                        content += '</div>';
+                    } else {
+                        var content = '<div class="infoWindow">';
+                        content+='Nome Lead: ' + objetoMarker.lead + '<br>';
+                        content+='Status Lead: ' + objetoMarker.statusLead + '<br>';
+                        content+='Data Compromisso: ' + objetoMarker.dataCompromisso + '<br>';
+                        if(objetoMarker.dataCheckIn != null) {
+                            content+='Data Check-In: ' + objetoMarker.dataCheckIn + '<br>';
+                        }
+                        content+='Status Compromisso: ' + objetoMarker.status + '<br>';
+                        content+='Link: ' + '<a href="'+objetoMarker.link+'">' + objetoMarker.nomeCompromisso + '</a>' + '<br>';
+                        content += '</div>';
+                    }
+                    var infowindow = new google.maps.InfoWindow();
+                    infoWindows.push(infowindow);
+                    google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+                        return function() {
+                            for(var j=0;j<infoWindows.length;j++){
+                                var infoWindowFechar = infoWindows[j];
+                                infoWindowFechar.close();
+                            } 
+                            infowindow.setContent(content);
+                            infowindow.open(map,marker);
+                        };
+                    })(marker,content,infowindow)); 
+                }
+                console.log(listaMarkersJson.length);
+                showMarkers();
+
+                // definindo foco do mapa e nível de zoom
+                if(listaMarkersJson.length>0){
+                    map.panTo(primeiraLocalizacao);
+                    map.setZoom(8);                  
+                }else{
+                    //Coordenadas da Um Telecom Boa Viagem para caso não ache nenhum compromisso.
+                    map.panTo(new google.maps.LatLng(-8.116032, -34.902626));
+                    map.setZoom(8);
+                }
+
+            }
+
+        }
+
+        
+        //funções auxiliares
+        function deleteMarkers() {
+            clearMarkers();
+            markers = [];
+        }
+
+        function clearMarkers() {
+            setAllMap(null);
+        }
+
+        function setAllMap(map) {
+            console.log(markers);
+            markerBounds = new google.maps.LatLngBounds();
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+                markerBounds.extend(markers[i].position);
+            }
+        }
+
+        function showMarkers() {
+            setAllMap(map);
+        }
+
+    </script>
+
+</apex:page>

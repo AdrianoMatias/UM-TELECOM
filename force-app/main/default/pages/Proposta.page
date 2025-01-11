@@ -1,0 +1,197 @@
+<apex:page showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" renderAs="PDF" standardController="Opportunity" extensions="PropostaCTRL" applyBodyTag="false" title="Proposta comercial">
+    <head>
+        <style type="text/css" media="print">
+            body {
+                font-family: Arial, serif;
+                font-weight: 400;
+                font-size: 12.5pt;
+            }
+
+            p {
+                font-family: Arial, serif;
+                text-align: justify;
+                color: #595959;
+            }
+
+            .date {
+                color: #BEBEBE;
+                font-size: 18px;
+            }
+
+            .text{
+                font-size: 48px;
+                color: #BEBEBE;
+            }
+
+            .date-container{
+                text-align: right;
+                margin-top: 5%;
+                font-size: 8px;
+            }
+
+            .payment-flux {
+                padding-top: 26px;
+                font-weight: bold;
+                color: #595959;
+            }
+
+            .table-endereco {
+                font-size: 10pt;
+                border-collapse: collapse;
+                color: #595959;
+            }
+
+            table {
+                font-size: 11pt;
+                color: #595959;
+                border: 0px;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            th, td {
+                border: 1px solid black;
+            }
+
+            @page {
+                size: 8.5in 11in;
+                margin-top: 1.2in;
+
+                @top-center {
+                    content: element(header);
+                }
+
+                @bottom-left {
+                    content: element(footer);
+                }
+            }
+
+            div.footer {
+                position:fixed;
+                bottom: 0;
+                width: 100%;
+                text-align: center;
+            }
+
+            div.header {
+                padding: 10px;
+                position: running(header);
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <div>
+                    <apex:image url="{!URLFOR($Resource.ImagensPDF, 'logo.jpg')}" width="150px" style="margin-left: 5px;"/>
+                </div>
+            </div>
+            <div>
+                <div class="date-container">
+                    <span class="date">{!today}</span>
+                </div>
+                <p Style="text-align:left;">Á,<br/><strong>{!nomeConta}</strong></p>
+                <div>
+                    <h3 class="payment-flux">1. OBJETIVO</h3>
+                    <p>Apresentar soluções para o fornecimento de serviços de link dedicado Full Duplex. O serviço provê alta qualidade no acesso dedicado sendo ideal para empresas que precisam de uma conexão à Internet de alta performance e disponibilidade em todos os períodos do dia. A Internet Corporativa oferece ainda IP válidos e link 100% dedicado, além de várias opções de velocidades, adaptando-se as necessidades da sua empresa. A solução proposta permitirá ao Cliente dar continuidade ao plano de modernização da sua rede de telecomunicações, garantindo a qualidade, confiabilidade e disponibilidade requeridas, propiciando assim as condições necessárias à agregação de serviços e expansão da oferta de novos serviços. Esta Proposta retrata a tendência de grandes corporações, transferindo atividades meio para empresas especializadas. Diante desta nova realidade, a UmTelecom se propõe a atender os clientes corporativos, adotando metodologias inovadoras neste tipo de atividade. A UmTelecom será responsável por fornecer uma infra-estrutura de telecomunicações com tecnologia de ponta e notório conhecimento no setor.</p>
+                    <h3 class="payment-flux">2. CONDIÇÕES DE FORNECIMENTO</h3>
+                    <p>A infra-estrutura do local de instalação e o espaço necessário para a completa instalação dos equipamentos ora propostos são de responsabilidade do cliente, bem como providenciar local adequado e executar, com recursos próprios e por sua conta e risco, a rede interna e os acessos por onde passarão os cabos e a infra-estrutura necessários à correta instalação e funcionamento dos equipamentos e serviços da UmTelecom. A manutenção preventiva ou corretiva dos equipamentos fornecidos pela UmTelecom será de responsabilidade dela, conforme termos contratuais.</p>
+                    <h3 class="payment-flux">3. SUPORTE TÉCNICO</h3>
+                    <p>A UmTelecom possui o Setor de Suporte Técnico que está capacitado a prestar atendimento técnico através do telefone 0800-88711533 ou (81) 3497.6059.</p>
+                    <h3 class="payment-flux">4. CONFIDENCIALIDADE</h3>
+                    <p>Todos os aspectos técnicos, operacionais, comerciais, jurídicos e financeiros desta proposta devem ser mantidos em absoluto sigilo por ambas as partes.</p>
+                    <br />
+                    <h3 class="payment-flux">5. VALIDADE DA PROPOSTA</h3>
+                    <p>Os termos desta proposta são válidos por um período de 07 dias contados da sua apresentação.</p>
+                    <h3 class="payment-flux">6. CONDIÇÕES COMERCIAIS E TÉCNICAS</h3>
+                </div>
+                <div style="padding-top: 10px;">
+                    <!--<div style="padding-top: 10px; padding-left: 24px; padding-right: 24px;">-->
+                        <table class="table">
+                            <thead>
+                                <tr style="padding-top: 4px; padding-bottom: 4px;">
+                                    <th><div style="text-align:center; font-size: 10px; padding-top: 8px; padding-bottom: 8px; ">NOME DO PRODUTO</div></th>
+                                    <th><div style="text-align:center; font-size: 10px; padding-top: 8px; padding-bottom: 8px; ">BANDA/QUANTIDADE</div></th>
+                                    <th><div style="text-align:center; font-size: 10px; padding-top: 8px; padding-bottom: 8px; ">PRAZO INSTALAÇÃO</div></th>
+                                    <th><div style="text-align:center; font-size: 10px; padding-top: 8px; padding-bottom: 8px; ">VALOR DA INSTALAÇÃO</div></th>
+                                    <th><div style="text-align:center; font-size: 10px; padding-top: 8px; padding-bottom: 8px; ">PRAZO CONTRATUAL</div></th>
+                                    <th><div style="text-align:center; font-size: 10px; padding-top: 8px; padding-bottom: 8px; ">VALOR MENSAL</div></th>
+                                    <th><div style="text-align:center; font-size: 10px; padding-top: 8px; padding-bottom: 8px; ">QUANT. DE IP</div></th>
+                                </tr>
+                                <apex:repeat value="{!listaOli}" var="oli">
+                                    <tr style="page-break-inside:avoid">
+                                        <td><div style="text-align:center; font-size: 10px; padding-top: 8px; padding-bottom: 8px; ">{!oli.Product2.Description}</div></td>
+                                        <td><div style="text-align:center; font-size: 10px; padding-top: 8px; padding-bottom: 8px; ">{!oli.Quantity}</div></td>
+                                        <td><div style="text-align:center; font-size: 10px; padding-top: 8px; padding-bottom: 8px; ">{!IF(oli.Analise_de_viabilidade__c!=null,oli.Analise_de_viabilidade__r.Prazo_de_Instalacao__c,'Não Possui')}</div></td>
+                                        <td><div style="text-align:center; font-size: 10px; padding-top: 8px; padding-bottom: 8px; ">{!IF(oli.Taxa_de_instalacao__c!=null,oli.Taxa_de_instalacao__c,'0')}</div></td>
+                                        <td><div style="text-align:center; font-size: 10px; padding-top: 8px; padding-bottom: 8px; ">{!oli.Opportunity.Meses__c} MESES</div></td>
+                                        <td><div style="text-align:center; font-size: 10px; padding-top: 8px; padding-bottom: 8px; ">{!oli.TotalPrice}</div></td>
+                                        <td><div style="text-align:center; font-size: 10px; padding-top: 8px; padding-bottom: 8px; ">{!IF(oli.Analise_de_viabilidade__c!=null&&oli.Analise_de_viabilidade__r.Quantidade_de_Ips__c!=null,oli.Analise_de_viabilidade__r.Quantidade_de_Ips__c,'Não Possui')}</div></td>
+                                    </tr>
+                                </apex:repeat>
+                            </thead>
+                        </table>
+                    <!--</div>-->
+                </div>
+                <h3 class="payment-flux">Endereços de instalação:</h3>
+                <div style="padding-top: 10px;">
+                    <apex:repeat value="{!listaOli}" var="oli">
+                        <apex:outputPanel rendered="{!IF(oli.Analise_de_viabilidade__c!=null &&oli.Analise_de_viabilidade__r.Rua_de_destino__c==Null,true,false)}">
+                            <div class="table-endereco">
+                                <div>PRODUTO: {!oli.Product2.Name}</div>
+                                <div>ENDEREÇO: {!oli.Analise_de_viabilidade__r.Tipo_de_logradouro_origem__c } {!oli.Analise_de_viabilidade__r.Rua_de_origem__c}, {!oli.Analise_de_viabilidade__r.Numero_de_origem__c}, {!oli.Analise_de_viabilidade__r.Bairro_de_origem__c} - {!oli.Analise_de_viabilidade__r.Cidade_de_origem__c}-{!oli.Analise_de_viabilidade__r.Estado_de_origem__c} - CEP: {!oli.Analise_de_viabilidade__r.CEP_de_origem__c}</div>
+                            </div>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!IF(oli.Analise_de_viabilidade__c!=null&&oli.Analise_de_viabilidade__r.Rua_de_destino__c!=Null,true,false)}">
+                            <div class="table-endereco">
+                                <div>PRODUTO: {!oli.Product2.Name}</div>
+                                <div>ENDEREÇO A: {!oli.Analise_de_viabilidade__r.Tipo_de_logradouro_origem__c} {!oli.Analise_de_viabilidade__r.Rua_de_origem__c}, {!oli.Analise_de_viabilidade__r.Numero_de_origem__c}, {!oli.Analise_de_viabilidade__r.Bairro_de_origem__c} - {!oli.Analise_de_viabilidade__r.Cidade_de_origem__c}-{!oli.Analise_de_viabilidade__r.Estado_de_origem__c} - CEP: {!oli.Analise_de_viabilidade__r.CEP_de_origem__c}</div>
+                                <div>ENDEREÇO B: {!oli.Analise_de_viabilidade__r.Tipo_de_logradouro_destino__c} {!oli.Analise_de_viabilidade__r.Rua_de_destino__c}, {!oli.Analise_de_viabilidade__r.Numero_de_destino__c}, {!oli.Analise_de_viabilidade__r.Bairro_de_destino__c} - {!oli.Analise_de_viabilidade__r.Cidade_de_destino__c}-{!oli.Analise_de_viabilidade__r.Estado_de_destino__c} - CEP: {!oli.Analise_de_viabilidade__r.CEP_de_destino__c}</div>
+                            </div>
+                        </apex:outputPanel>
+                        <br/>
+                    </apex:repeat>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <p style="text-align: justify;">Atenciosamente,</p>
+        <br/>
+        <p style="text-align: left; margin-top: 0;">{!nomeContatoOpp}
+        <br/>{!opp.Owner.Title}<br />{!opp.Owner.Phone}</p>
+        <!--<div>
+            <table class="table table-bordered" style="width: 100%;" cellpadding="12">
+                <tbody>
+                    <tr>
+                        <th style="border: none !important; width: 33%;"><div align="center"><b>Local e Data</b></div></th>
+                        <th style="border: none !important; width: 33%;"></th>
+                        <th style="border: none !important; width: 34%;"><div align="center"><b>Responsável</b></div></th>
+                    </tr>
+                    <tr>        
+                        <td style="border: none !important;"><div align="center">{!today}</div></td>
+                        <td style="border: none !important;"><div align="right">Nome</div></td>
+                        <td style="border: none !important;"><div align="center">&nbsp;________________________________________</div></td>
+                    </tr>
+                    <tr>
+                        <td style="border: none !important;">&nbsp;</td>
+                        <td style="border: none !important;"><div align="right">CPF</div></td>
+                        <td style="border: none !important;"><div align="center">&nbsp;________________________________________</div></td>
+                    </tr>
+                    <tr>
+                        <td style="border: none !important;">&nbsp;</td>
+                        <td style="border: none !important;"><div align="right">Assinatura</div></td>
+                        <td style="border: none !important;"><div align="center">&nbsp;________________________________________</div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>-->
+        <div class="footer">
+            <apex:image url="{!URLFOR($Resource.ImagensPDF, 'endereco.jpg')}" width="180px" style="padding-left: 5px; padding-right: 20px;"/>
+            <apex:image url="{!URLFOR($Resource.ImagensPDF, 'fone.jpg')}" width="110px" style="padding-left: 20px; padding-right: 20px; "/>
+            <apex:image url="{!URLFOR($Resource.ImagensPDF, 'contato.jpg')}" width="100px" style="padding-left: 20px; padding-right: 20px; "/>
+            <apex:image url="{!URLFOR($Resource.ImagensPDF, 'redes_sociais.jpg')}" width="90px" style="padding-left: 20px; padding-right: 5px; "/>
+        </div>
+    </body>    
+</apex:page>

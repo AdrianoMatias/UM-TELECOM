@@ -1,0 +1,110 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+				access="global"
+				controller="ProdutosDaOportunidadeCTRL" >
+    
+	<!-- INICIO VARIAVÉIS-->
+	<aura:attribute name="catalogoProdutos" type="List"/>
+    <aura:attribute name="PossuiProdutos" type="Boolean" default="false"/>
+	<aura:attribute name="showSpinner" type="Boolean" default="false" />
+	<aura:attribute name="isModalOpen" type="Boolean" default="false" />
+	<!-- FIM VARIAVÉIS-->
+	
+	<aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+
+	<aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Loading" size="medium" />
+    </aura:if>
+	<div style="background: #fff !important;">
+		<lightning:button class="slds-align_absolute-left" name="Add Produto" label="Add Produto" onclick="{!c.abrirModal}"/>
+	</div>
+	<aura:renderIf isTrue="{!v.isModalOpen}">
+		<div style="800px">
+			<section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+				<div class="slds-modal__container">
+					<header class="slds-modal__header">
+                        <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Adicionar Produto(s)</h2>
+                    </header>
+					 <div aura:id="divAdicionarProduto" class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+						<aura:if isTrue="{!v.PossuiProdutos}">
+							<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped" role="grid">
+								<thead>
+									<tr class="slds-line-height_reset">
+										<th class="" scope="col">
+											<div class="slds-truncate" title="Nome do produto">Nome do produto</div>
+										</th>
+										<th class="" scope="col">
+											<div class="slds-truncate" title="Código do produto">Código do produto</div>
+										</th>
+										<th class="" scope="col">
+											<div class="slds-truncate" title="Preço min. executivo">Preço executivo</div>
+										</th>
+										<th class="" scope="col">
+											<div class="slds-truncate" title="Preço min. gerente">Preço gerente</div>
+										</th>
+										<th class="" scope="col">
+											<div class="slds-truncate" title="Preço min. diretor">Preço diretor</div>
+										</th>
+										<th class="" scope="col">
+											<div class="slds-truncate" title="Preço de venda">Preço de venda</div>
+										</th>
+										<th class="" scope="col">
+											<div class="slds-truncate" title="Ações">Ações</div>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+                					<aura:iteration items="{!v.catalogoProdutos}" var="prod" indexVar="index">
+									<tr class="slds-hint-parent">
+										<td role="gridcell">
+											<div class="slds-truncate" title="{!prod.nomeProduto}">
+                            					<ui:outputText value="{!prod.nomeProduto}"/>
+											</div>
+										</td>
+										<td role="gridcell">
+											<div class="slds-truncate" title="{!prod.codigoProduto}">
+                            					<ui:outputText value="{!prod.codigoProduto}"/>
+											</div>
+										</td>
+										<td role="gridcell">
+											<div class="slds-truncate" title="{!prod.precoExecutivo}">
+                            					<lightning:input id="{!index}" class="alignInputField" value="{!prod.precoExecutivo}" type="number" formatter="currency" step="0.01"/>
+											</div>
+										</td>
+										<td role="gridcell">
+											<div class="slds-truncate" title="{!prod.precoGerente}">
+                            					<lightning:input id="{!index}" class="alignInputField" value="{!prod.precoGerente}" type="number" formatter="currency" step="0.01"/>
+											</div>
+										</td>
+										<td role="gridcell">
+											<div class="slds-truncate" title="{!prod.precoDiretor}">
+                            					<lightning:input id="{!index}" class="alignInputField" value="{!prod.precoDiretor}" type="number" formatter="currency" step="0.01"/>
+											</div>
+										</td>
+										<td role="gridcell">
+                        					<div class="slds-truncate" title="{!prod.PrecoUnitario}">
+                        						<lightning:input id="{!index}" class="alignInputField" value="{!prod.PrecoUnitario}" type="number" formatter="currency" step="0.01"/>
+                        					</div>
+										</td>
+										<td role="gridcell">
+                        					<div class="slds-truncate">
+                        						<lightning:buttonIcon iconName="utility:add" variant="border-filled" alternativeText="Adicionar" name="{!prod.codigoProduto}" onclick="{!c.adicionarProdutos}"/>
+                        					</div>
+										</td>
+									</tr>
+                					</aura:iteration>
+								</tbody>
+							</table>
+							<aura:set attribute="else">
+								<p><b>Não há novos produtos cadastrado para esse catalógo</b></p>
+							</aura:set>
+						</aura:if>
+					</div>
+					<footer class="slds-modal__footer slds-align_absolute-left" style="background-color: #fff">
+						<lightning:button name="Fechar" label="Fechar" onclick="{!c.fecharModal}"/>
+					</footer>
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open"></div>
+		</div>
+	</aura:renderIf>
+</aura:component>

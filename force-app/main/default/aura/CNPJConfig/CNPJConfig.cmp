@@ -1,0 +1,110 @@
+<aura:component controller="CNPJConfigCTRL" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+				access="global">
+	
+	<aura:attribute name="accountConfigs" type="List"/>
+	<aura:attribute name="contactConfigs" type="List"/>
+	<aura:attribute name="accountFields" type="List"/>					
+	<aura:attribute name="contactFields" type="List"/>
+	<aura:attribute name="tokenReceita"	type="String"/>					
+	<aura:attribute name="tokenGoogleWS" type="String"/>	
+					
+
+	<aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+
+	<!-- PAGE HEADER -->
+
+	<!-- / PAGE HEADER -->
+	<div class="slds-grid slds-guntters" style="margin-top: 15px">
+		<div class="slds-col slds-size_1-of-1">
+			<lightning:card title="Tokens de Acesso">
+		        <aura:set attribute="actions">
+		            <lightning:button label="Salvar" variant="brand" onclick="{!c.doSaveCustomSettings}" />
+		        </aura:set>
+				<div>
+					<lightning:layout horizontalAlign="center">
+						<lightning:layoutItem size="6">
+							<lightning:input name="ReceitaWS" label="Token Receita" value="{!v.tokenReceita}" class="Teste"></lightning:input>
+						</lightning:layoutItem>
+						<lightning:layoutItem size="6">
+							<lightning:input name="Google" label="Token Maps" value="{!v.tokenGoogleWS}" class="Teste"></lightning:input>
+						</lightning:layoutItem>
+					</lightning:layout>
+				</div>
+			</lightning:card>
+		</div>
+	</div>
+	<div class="slds-grid slds-guntters slds-grid_align-spread" style="margin-top: 15px">
+		<div class="slds-col slds-size_6-of-12">
+			<lightning:card title="Conta">
+		        <aura:set attribute="actions">
+		            <lightning:button label="Salvar" variant="brand" onclick="{!c.doSaveAccountConfigs}"/>
+		        </aura:set>				
+		        <div class="slds-grid slds-guntters" style="margin-top: 15px">
+		        	<div class="slds-col slds-size_12-of-12">
+		        		<table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+							<thead>
+								<tr>
+									<th scope="col" style="width: 40%">De</th>
+									<th scope="col" style="width: 30%">Tipo</th>
+									<th scope="col" style="text-align: center">Para</th>
+								</tr>
+							</thead>
+							<tbody>
+								<aura:iteration items="{!v.accountConfigs}" var="accountConfig" indexVar="index">
+									<tr>
+										<th scope="row"><lightning:formattedText value="{!accountConfig.config.Label__c}"/></th>
+										<th scope="row"><lightning:formattedText value="{!accountConfig.fieldWrapper.tipo}"/></th>
+										<th scope="row">
+											<lightning:select aura:id="accountDestinyField" name="{!index}" variant="label-hidden" onchange="{!c.onChangeAccountField}" class="alignInputField">
+												<option value="">Selecione um campo</option>
+												<aura:iteration items="{!v.accountFields}" var="field">
+													<option value="{!field.value}" selected="{!field.value==accountConfig.config.From__c}">{!field.label}</option>
+												</aura:iteration>
+											</lightning:select>
+										</th>
+									</tr>
+								</aura:iteration>
+							</tbody>
+						</table>
+					</div>
+				</div>		
+			</lightning:card>
+		</div>
+		<div class="slds-col slds-size_6-of-12 slds-p-left_small" Style="margin-left:5px;" >
+			<lightning:card title="Contato">
+		        <aura:set attribute="actions">
+		            <lightning:button label="Salvar" variant="brand" onclick="{!c.doSaveContactsConfigs}" />
+		        </aura:set>								
+		        <div class="slds-grid slds-guntters" style="margin-top: 15px">
+		        	<div class="slds-col slds-size_12-of-12">
+		        		<table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+							<thead>
+								<tr>
+									<th scope="col" style="width: 40%">De</th>
+									<th scope="col" style="width: 30%">Tipo</th>
+									<th scope="col" style="text-align: center">Para</th>
+								</tr>
+							</thead>
+							<tbody>
+								<aura:iteration items="{!v.contactConfigs}" var="contactConfig" indexVar="index">
+									<tr>
+										<th scope="row"><lightning:formattedText value="{!contactConfig.config.Label__c}"/></th>
+										<th scope="row"><lightning:formattedText value="{!contactConfig.fieldWrapper.tipo}"/></th>
+										<th scope="row">
+											<lightning:select aura:id="contactDestinyField" name="{!index}" variant="label-hidden" onchange="{!c.onChangeContactField}" class="alignInputField">
+												<option value="">Selecione um campo</option>
+												<aura:iteration items="{!v.contactFields}" var="field">
+													<option value="{!field.value}" selected="{!field.value==contactConfig.config.From__c}">{!field.label}</option>
+												</aura:iteration>
+											</lightning:select>
+										</th>
+									</tr>
+								</aura:iteration>
+							</tbody>
+						</table>
+					</div>
+				</div>		
+			</lightning:card>
+		</div>
+	</div>
+</aura:component>

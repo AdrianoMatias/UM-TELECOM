@@ -1,0 +1,37 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" 
+				access="global" 
+				controller="ContratoPersonalizadoCTRL">
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+	<aura:attribute name="accept" type="List" default="['.pdf']"/>
+    <aura:attribute name="multiple" type="Boolean" default="false"/>
+    <aura:attribute name="disabled" type="Boolean" default="false"/>
+
+    <aura:attribute name="showFileCard" type="Boolean" default="false"/>
+
+    <aura:attribute name="nameFile" type="String" />
+    <aura:attribute name="idFile" type="String" />
+
+    <div style="margin-bottom: 10px;">
+		<lightning:fileUpload  name="fileUploader"
+                   label= "Anexar Contrato"
+                   multiple="false"
+                   accept="{!v.accept}"
+                   disabled="{!v.disabled}"
+                   recordId="{!v.recordId}"
+                   onuploadfinished="{! c.handleUploadFinished }"/>	
+		
+    </div>
+    <aura:renderIf isTrue="{!v.showFileCard}">
+	    <div style="margin-bottom: 10px;">
+		    <lightning:fileCard description="{!v.nameFile}" fileId="{!v.idFile}"/>
+  		</div>
+  		<div>
+  			<lightning:button variant="destructive" label="Remover Contrato" title="Remover Contrato" onclick="{!c.deleteFile}"  />
+  		</div>
+		<div style="margin-top:10px;">
+			<lightning:input type="checkbox" label="Deseja enviar os contratos padrões juntos a este anexo?" aura:id="enviarContratosPadroes" onchange="{!c.onMarcarEnviarContratosPadroes}"/>
+		</div>
+	</aura:renderIf>
+</aura:component>

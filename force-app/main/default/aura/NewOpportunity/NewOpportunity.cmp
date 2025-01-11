@@ -1,0 +1,37 @@
+<aura:component controller="NewOpportunity" implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <aura:attribute name="options" type="List" default="[
+    {'label': 'Upgrade', 'value': 'Upgrade'},
+    {'label': 'Downgrade', 'value': 'Downgrade'},
+    {'label': 'Mudança de endereço', 'value': 'Mudança de endereço'},
+    ]"/>
+    <aura:attribute name="numeroDoCircuito" type="string"/>
+    <aura:attribute name="carregando" type="boolean" default="false"/>
+    
+    <aura:handler event="aura:waiting" action="{!c.waiting}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.doneWaiting}"/>
+
+    <div class="modal-header slds-modal__header">
+    	<h2 class="title slds-text-heading--medium slds-hyphenate slds-text-align_center">Nova Oportunidade</h2>
+    </div>
+    
+    <br/>
+    
+    <div class="slds-size_1-of-2">
+        <lightning:input aura:id="Name" name="Name" required="true" label="Nome da oportunidade"/><br/>   
+        <lightning:input aura:id="closeDate" type="date" name="closeDate" required="true" label="Data de fechamento"/><br/>  
+        <lightning:combobox aura:id="tipo" name="tipo" required="true" label="Tipo" placeholder="Tipo de alteração" options="{!v.options}"/><br/>  
+        <lightning:input aura:id="amount" type="number" name="amount" required="true" label="Valor" formatter="currency" step="0.01"/>
+    </div>
+    
+    <br/>
+    
+    <div class="modal-footer slds-modal__footer slds-align_absolute-center">
+    	<lightning:button aura:id="cancelar" label="Cancelar" title="Cancelamento" onclick="{!c.button}"/>
+        <lightning:button aura:id="salvar" variant="brand" label="Salvar" title="Salvamento" onclick="{!c.button}"/>
+    </div>
+    
+    <aura:if isTrue="{!v.carregando}">
+    	<lightning:spinner variant="brand" size="large"/>
+    </aura:if>
+    
+</aura:component>

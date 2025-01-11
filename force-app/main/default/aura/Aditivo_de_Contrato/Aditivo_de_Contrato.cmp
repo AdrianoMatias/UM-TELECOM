@@ -1,0 +1,19 @@
+<aura:component controller="Aditivo_de_Contrato_Class" implements="force:lightningQuickAction,force:hasRecordId">
+    <aura:attribute name="mydata" type="Object"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="disabledButton" type="Boolean" default="true"/>
+    <aura:attribute name="selectedRows" type="List"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    
+    <lightning:datatable data="{!v.mydata }"
+        columns="{!v.mycolumns}"
+        keyField="id"
+        maxRowSelection="1"
+        onrowselection="{!c.disabledButton}"/>
+    
+    <div class="modal-footer slds-modal__footer">
+    	<lightning:button aura:id="editar" variant="brand" label="Editar" title="Edição" onclick="{!c.button}" disabled="{!v.disabledButton}"/>
+    </div>
+
+</aura:component>

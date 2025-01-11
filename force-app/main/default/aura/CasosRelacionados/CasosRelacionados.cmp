@@ -1,0 +1,38 @@
+<aura:component controller="CasosRelacionadosCTRL" implements="force:hasRecordId,flexipage:availableForAllPageTypes" access="global">
+    
+    <aura:attribute name="recordId" type="string" />
+    <aura:attribute name="numeroCasos" type="String" default="0"/>
+    <aura:attribute name="casosRelacionados" type="Object[]" />
+    <lightning:workspaceAPI aura:id="workspace"/>
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    
+    <div Class="slds-grid slds-wrap slds-box" Style="background: #f3f2f2;border-bottom-right-radius: inherit;border-bottom-left-radius: inherit;">
+        <div Class="slds-col slds-size_1-of-12">
+            <lightning:icon iconName="standard:case" alternativeText="Caso" title="Caso" size="small"/>
+        </div>
+        <div Class="slds-col slds-size_6-of-12" style="font-weight: var(--lwc-cardFontWeight,700);font-size: initial;padding-top: 0.2rem;">
+            <span > 
+                Casos Relacionados ({! v.numeroCasos })
+            </span>
+        </div>
+         <div Class="slds-col slds-size_5-of-12" style="display: flex;justify-content: flex-end;">
+            <lightning:button variant="brand-outline" label="Atualizar" title="Atualizar" onclick="{! c.doInit }" />
+        </div>
+    </div>       
+    <div class="slds-grid slds-wrap slds-box"  Style="padding-top: 0rem;border-top-right-radius: inherit;border-top-left-radius: inherit;">
+        <div class="slds-col slds-size_1-of-1" >
+            <div class="slds-grid slds-wrap" Style="padding-top: 1rem;" >
+                <aura:iteration items="{! v.casosRelacionados }" var="caso" indexVar="index">
+                    <div class="slds-col slds-size_12-of-12">
+                        <span>Numero do caso: <a onclick="{! c.redirect }" id="{! caso.Id }">{! caso.CaseNumber }</a></span>
+                    </div>
+                    <div class="slds-col slds-size_12-of-12" style="padding-bottom:0.5rem">
+                        <span>Conta: <a onclick="{! c.redirect }" id="{! caso.AccountId }">{! caso.Account.Name }</a></span>
+                    </div>
+                </aura:iteration>
+            </div>
+        </div>
+        
+    </div>
+</aura:component>

@@ -1,0 +1,115 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader"
+    controller="EnviarSAPCTRL">
+
+    <aura:html tag="style">
+        .cuf-content {
+        padding: 0 0rem !important;
+        }
+
+        .slds-p-around-medium {
+        padding: 0rem !important;
+        }
+
+        .slds-modal__content{
+        overflow-y:hidden !important;
+        height:unset !important;
+        max-height:unset !important;
+        }
+
+        .slds-modal__container{
+        transform: unset !important;
+        }
+    </aura:html>
+
+    <!-- INICIO VARIAVÉIS-->
+    <aura:attribute name="listaProdutos" type="List" />
+    <aura:attribute name="isModalOpen" type="Boolean" default="false" />
+    <aura:attribute name="possuiProdutos" type="Boolean" default="false" />
+    <aura:attribute name="contadorSelecionados" type="Integer" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <!-- FIM VARIAVÉIS-->
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+
+    <!-- Spinner -->
+    <aura:renderIf isTrue="{!v.showSpinner}">
+        <lightning:spinner alternativeText="Carregando..." size="medium" />
+    </aura:renderIf>
+    <!-- Spinner -->
+
+    <aura:if isTrue="{!v.isModalOpen}">
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large"
+            aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Selecione o(s) produto(s) para criar o(s) contrato(s) no SAP</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <aura:if isTrue="{!not(empty(v.listaProdutos))}">
+                        <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped" role="grid">
+                            <thead>
+                                <tr class="slds-line-height_reset">
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate">
+                                            <ui:inputCheckbox aura:id="box3" change="{!c.selecionarTodos}" />
+                                        </div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Nome do Produto">Nome do Produto</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Valor">Código do Produto</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Valor">Valor</div>
+                                    </th>
+                                    <th class="" scope="col">
+                                        <div class="slds-truncate" title="Mensalidade">Mensalidade</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <aura:iteration items="{!v.listaProdutos}" var="oli" indexVar="index">
+                                    <tr class="slds-hint-parent">
+                                        <td role="gridcell">
+                                            <div class="slds-truncate">
+                                                <ui:inputCheckbox aura:id="boxPack" name="{!oli.Id}" />
+                                            </div>
+                                        </td>
+                                        <td role="gridcell">
+                                            <div class="slds-truncate" title="{!oli.Product2.Name}">
+                                                <ui:outputText value="{!oli.Product2.Name}" />
+                                            </div>
+                                        </td>
+                                        <td role="gridcell">
+                                            <div class="slds-truncate" title="{!oli.Product2.ProductCode}">
+                                                <ui:outputText value="{!oli.Product2.ProductCode}" />
+                                            </div>
+                                        </td>
+                                        <td role="gridcell">
+                                            <div class="slds-truncate" title="{!oli.UnitPrice}">
+                                                <ui:outputText value="{!oli.UnitPrice}" />
+                                            </div>
+                                        </td>
+                                        <td role="gridcell">
+                                            <div class="slds-truncate" title="{!oli.Opportunity.Amount}">
+                                                <ui:outputText value="{!oli.Opportunity.Amount}" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </aura:iteration>
+                            </tbody>
+                        </table>
+                        <aura:set attribute="else">
+                            <p style="text-align: center;"><b> Não há mais produtos disponíveis para se gerar novos contratos</b></p>
+                        </aura:set>
+                    </aura:if>
+                </div>
+                <footer class="slds-modal__footer slds-align_absolute-left" style="background-color: #fff">
+                    <lightning:button name="Criar Contrato" label="Criar Contrato" variant="brand" onclick="{!c.criaContratoWebhookJS}" />
+                    <lightning:button name="Fechar" label="Fechar" onclick="{!c.fecharModal}" />
+                </footer>
+            </div>
+        </section>
+    </aura:if>
+</aura:component>

@@ -1,0 +1,484 @@
+<apex:page showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" renderAs="PDF" controller="PreambuloCTRL" title="Preâmbulo do Contrato" cache="true" contentType="application/x-pdfPreambulo.pdf">
+    
+   <head>
+        <title>Preâmbulo do Contrato</title>
+        <apex:stylesheet value="{!URLFOR($Resource.bootstrap, 'bootstrap/css/bootstrap.min.css')}"/>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+        <style type="text/css">
+            table tr td {
+                padding: 1px !important;
+            }
+            body{
+                padding: 0;
+                margin: 0;
+                font-size: 10px !important;
+            }
+            .textSmall {
+                font-size: 10px !important;
+            }
+            .caixaAlta{
+                text-transform: uppercase;
+            }
+        </style>
+
+        <script language="javascript" type="text/javascript">
+        window.onload = new function(){ 
+            if('{!$User.UITheme}' == 'Theme4t') {
+                sforce.one.navigateToURL('/apex/Preambulo?id={!contrato.Id}');
+            }
+        }
+        </script>
+    </head>
+    <body>
+        <div class="container" style="height: 1153px; height: 900px;">
+            <table >
+                <tbody>
+                    <tr>
+                        <td align="middle">
+                            <div style="width: 180px; display: inline-block;">
+                                <apex:image url="{!URLFOR($Resource.ImagensPDF, 'logo.jpg')}" width="150px" style="margin-left: 5px; padding-bottom:10px; "/>
+                            </div>
+                            <div style="width: 425px; display: inline-block; text-align: center;">
+                                <br/>
+                                <span style="font-size: 12px; margin-left: -50px;"><b>1TELECOM SERVIÇOS DE TECNOLOGIA EM INTERNET LTDA</b></span>
+                                <br/>
+                                <span style="font-size: 12px; margin-left: -50px;"><b>CNPJ: 11.844.663/0001-09</b></span>
+                            </div>
+                            <div style="text-align: center;  display: inline-block; height: 60px; position: absolute; width: 100px; margin-left: 600px; margin-top: 20px; " >
+                                <span style="font-size: 10px; margin-top:5px;"><b>CONTRATO Nº </b></span><br/>{!contrato.Codigo_do_contrato__c}
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/>
+            <table style="margin-bottom: 0px !important; width: 100%; background-color: #0196cd; color: white;">
+                <tr>
+                    <td align="center">DADOS DA CONTRATADA</td>
+                </tr>
+            </table>
+            <table class="table table-bordered" style="">
+                <tbody>
+                    <tr>
+                        <td colspan="4">
+                            <div class="textSmall">RAZÃO SOCIAL</div>
+                            <div class="caixaAlta">1TELECOM SERVIÇOS DE TECNOLOGIA EM INTERNET LTDA</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="textSmall">CNPJ</div>
+                            <div class="caixaAlta">11.844.663/0001-09</div>
+                        </td>
+                        <td colspan="2">
+                            <div class="textSmall">Inscrição Estadual</div>
+                            <div class="caixaAlta">03969819-0</div>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <div class="textSmall">ENDEREÇO</div>
+                            <div class="caixaAlta">RUA PADRE CARAPUCEIRO, 858, SALA 1602</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">
+                            <div class="textSmall">BAIRRO</div>
+                            <div>BOA VIAGEM</div>
+                        </td>
+                        <td colspan="1">
+                            <div class="textSmall">CIDADE</div>
+                            <div class="caixaAlta">RECIFE</div>
+                        </td>
+                        <td colspan="1">
+                            <div class="textSmall">ESTADO</div>
+                            <div class="caixaAlta">PERNAMBUCO</div>
+                        </td>
+                        <td colspan="1">
+                            <div class="textSmall">CEP</div>
+                            <div class="caixaAlta">51.020-280</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">
+                            <div class="textSmall">TELEFONE</div>
+                            <div class="caixaAlta">(81) 3497-6060</div>
+                        </td>
+                        <td colspan="1">
+                            <div class="textSmall">SAC</div>
+                            <div class="caixaAlta">0800-081-2157</div>
+                        </td>
+                        <td colspan="1">
+                            <div class="textSmall">SITE</div>
+                            <div class="caixaAlta">http://www.1telecom.com.br/</div>
+                        </td>
+                        <td colspan="1">
+                            <div class="textSmall">E-MAIL</div>
+                            <div class="caixaAlta">noc@1telecom.com.br</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table style="margin-bottom: 0px !important; width: 100%; background-color: #0196cd; color: white;">
+                <tr>
+                    <td align="center">DADOS DO CONTRATANTE</td>
+                </tr>
+            </table>
+            <table class="table table-bordered" style="">
+                <tbody>
+                    <tr>
+                        <td colspan="2">
+                            <div class="textSmall">Razão social (Sem Abreviações)</div>
+                            <div class="caixaAlta">{!conta.Razao_Social__c}</div>
+                        </td>
+                        <td colspan="2">
+                            <div class="textSmall">Nome fantasia (Sem Abreviações)</div>
+                            <div class="caixaAlta">{!conta.Nome_Fantasia__c}</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="textSmall">CNPJ</div>
+                            <div class="caixaAlta">{!conta.CNPJ__c}</div>
+                        </td>
+                        <td colspan="1">
+                            <div class="textSmall">Insc. Municipal</div>
+                            <div class="caixaAlta">{!IF(conta.Inscricao_municipal__c!=null,conta.Inscricao_municipal__c,'S/N')}</div>
+                        </td>
+                        <td colspan="1">
+                            <div class="textSmall">Insc. Estadual</div>
+                            <div class="caixaAlta">{!IF(conta.Inscricao_Estadual__c!=null,conta.Inscricao_Estadual__c,'S/N')}</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div class="textSmall">Endereço</div>
+                            <div class="caixaAlta">{!conta.BillingStreet}</div>
+                        </td>
+                        <td colspan="1">
+                            <div class="textSmall">Número</div>
+                            <div>{!conta.Numero_de_cobranca__c}</div>
+                        </td>
+                        <td colspan="1">
+                            <div class="textSmall">CEP</div>
+                            <div>{!conta.BillingPostalCode}</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">
+                            <div class="textSmall">Complemento</div>
+                            <div class="caixaAlta">{!IF(conta.Complemento_de_cobranca__c!=null,conta.Complemento_de_cobranca__c,'S/N')}</div>
+                        </td>
+                        <td colspan="1">
+                            <div class="textSmall">Bairro</div>
+                            <div class="caixaAlta">{!conta.Bairro_de_cobranca__c}</div>
+                        </td>
+                        <td colspan="1">
+                            <div class="textSmall">Cidade</div>
+                            <div class="caixaAlta">{!conta.BillingCity}</div>
+                        </td>
+                        <td colspan="1">
+                            <div class="textSmall">UF</div>
+                            <div class="caixaAlta">{!conta.BillingState}</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">
+                            <div class="textSmall">DDD + Fone Comercial</div>
+                            <div>{!conta.Phone}</div>
+                        </td>
+                        <td colspan="1">
+                            <div class="textSmall">DDD + Celular</div>
+                            <div>{!IF(conta.Telefone_2__c!=null,conta.Telefone_2__c,'S/N')}</div>
+                        </td>
+                        <td colspan="2">
+                            <div class="textSmall">E-mail</div>
+                            <div class="caixaAlta">{!conta.Email__c}</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table style="margin-bottom: 0px !important; margin-top: 5px; width: 100%; background-color: #0196cd; color: white;">
+                <tr>
+                    <td align="center">RESUMO DOS PRODUTOS</td>
+                </tr>
+            </table>
+            <table class="table table-bordered" style="">
+                <tbody>
+                    <tr>    
+                        <td colspan="1" style="text-align: center;">
+                            <div class="textSmall">Item</div>
+                        </td>
+                        <td colspan="1" style="text-align:center;">
+                            <div class="textSmall">Descrição</div>
+                        </td>
+                        <td colspan="1" style="text-align:center;">
+                            <div class="textSmall">Banda</div>
+                        </td>
+                        <td colspan="1">
+                            <div class="textSmall">Valor</div>
+                        </td>
+                    </tr>
+                    <apex:variable var="indexProd" value="{!1}" />
+                    <apex:repeat value="{!itens}" var="item">
+                        <tr>
+                           <td colspan="1" style="text-align: center;">
+                                <div class="caixaAlta">{!indexProd}</div>
+                            </td>
+                            <td colspan="1" style="text-align: center;">
+                                <div class="caixaAlta">{!item.Produto__r.Name}</div>
+                            </td>
+                            <td colspan="1" style="text-align: center;">
+                                <div class="caixaAlta">{!item.Banda__c}</div>
+                            </td>
+                            <td colspan="1">
+                                <div class="caixaAlta">
+                                    <apex:outputText value="R${0, Number, ###,###,###.00}">
+                                        <apex:param value="{!item.Valor__c}"/>
+                                    </apex:outputText>
+                                </div>
+                            </td>
+                        </tr>
+                        <apex:variable var="indexProd" value="{!indexProd + 1}" />
+                    </apex:repeat>
+                    <tr>
+                        <td colspan="3" style="text-align:center;">
+                            <div class="textSmall">TOTAL:</div>
+                        </td>
+                        <td>
+                           <div class="textSmall">
+                                <apex:outputText value="R${0, Number, ###,###,###.00}">
+                                    <apex:param value="{!contrato.Total_do_contrato__c}" />
+                                </apex:outputText>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table style="margin-bottom: 0px !important; margin-top: 5px; width: 100%; background-color: #0196cd; color: white;">
+                <tr>
+                    <td align="center">ENDEREÇOS PARA INSTALAÇÃO</td>
+                </tr>
+            </table>
+            <apex:repeat value="{!itens}" var="item">
+                <apex:outputPanel rendered="{!IF(item.Rua_de_destino__c!=null,true,false)}">
+                    <table class="table table-bordered" style="">
+                        <tbody>
+                            <tr>
+                                <td colspan="4">
+                                    <div class="textSmall">Produto</div>
+                                    <div class="caixaAlta">{!item.Produto__r.Name}</div>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td colspan="4">
+                                    <div class="textSmall">Endereço A</div>
+                                    <div class="caixaAlta">{!item.Tipo_de_logradouro_de_origem__c} {!item.Rua_de_origem__c}, Nº {!item.numero_de_origem__c}, {!item.Bairro_de_origem__c}, {!item.Cidade_de_origem__c} - {!item.Estado_de_origem__c} CEP: {!item.CEP_de_origem__c}</div>
+                                </td>
+                            </tr>
+                            <!--<tr>
+                                <td colspan="2">
+                                    <div class="textSmall">CEP</div>
+                                    <div>{!item.CEP_de_origem__c}</div>
+                                </td>
+                                <td>
+                                    <div class="textSmall">Cidade</div>
+                                    <div class="caixaAlta">{!item.Cidade_de_origem__c}</div>
+                                </td>
+                                <td>
+                                    <div class="textSmall">Estado</div>
+                                    <div class="caixaAlta">{!item.Estado_de_origem__c}</div>
+                                </td>
+                            </tr>-->
+                            <tr>
+                                <td colspan="4">
+                                    <div class="textSmall">Endereço B</div>
+                                    <div class="caixaAlta">{!item.Tipo_de_logradouro_de_destino__c} {!item.Rua_de_destino__c}, Nº {!item.numero_de_destino__c}, {!item.Bairro_de_destino__c}, {!item.Cidade_de_destino__c} - {!item.Estado_de_destino__c} CEP: {!item.CEP_de_destino__c}</div>
+                                </td>
+                            </tr>
+                            <!--<tr>
+                                <td colspan="2">
+                                    <div class="textSmall">CEP</div>
+                                    <div>{!item.CEP_de_destino__c}</div>
+                                </td>
+                                <td>
+                                    <div class="textSmall">Cidade</div>
+                                    <div class="caixaAlta">{!item.Cidade_de_destino__c}</div>
+                                </td>
+                                <td>
+                                    <div class="textSmall">Estado</div>
+                                    <div class="caixaAlta">{!item.Estado_de_destino__c}</div>
+                                </td>
+                            </tr>-->
+                        </tbody>
+                    </table>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(item.Rua_de_destino__c==null,true,false)}">
+                    <table class="table table-bordered" style="">
+                        <tbody>
+                            <tr>
+                                <td colspan="4">
+                                    <div class="textSmall">Produto</div>
+                                    <div class="caixaAlta">{!item.Produto__r.Name}</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <div class="textSmall">Endereço</div>
+                                    <div class="caixaAlta">{!item.Tipo_de_logradouro_de_origem__c} {!item.Rua_de_origem__c}, Nº {!item.numero_de_origem__c}, {!item.Bairro_de_origem__c}, {!item.Cidade_de_origem__c} - {!item.Estado_de_origem__c} CEP: {!item.CEP_de_origem__c}</div>
+                                </td>
+                            </tr>
+                            <!--<tr>
+                                <td colspan="2">
+                                    <div class="textSmall">CEP</div>
+                                    <div>{!item.CEP_de_origem__c}</div>
+                                </td>
+                                <td>
+                                    <div class="textSmall">Cidade</div>
+                                    <div class="caixaAlta">{!item.Cidade_de_origem__c}</div>
+                                </td>
+                                <td>
+                                    <div class="textSmall">Estado</div>
+                                    <div class="caixaAlta">{!item.Estado_de_origem__c}</div>
+                                </td>
+                            </tr>-->
+                        </tbody>
+                    </table>
+                </apex:outputPanel>
+            </apex:repeat>
+            <!--<div Style="page-break-before:avoid">-->
+                <table style="margin-bottom: 0px !important; margin-top: 5px; width: 100%; background-color: #0196cd; color: white;">
+                    <tr>
+                        <td align="center">RESPONSABILIDADE FINANCEIRA - RESPONSÁVEL LEGAL</td>
+                    </tr>
+                </table>
+                <table class="table table-bordered" style="width: 100%;" cellpadding="12">
+                    <tbody>
+                        <tr>
+                            <th style="border: none !important; width: 33%;"><div align="center"><b>Local e Data</b></div></th>
+                            <th style="border: none !important; width: 33%;"></th>
+                            <th style="border: none !important; width: 34%;"><div align="center"><b>Responsável</b></div></th>
+                        </tr>
+                        <tr>        
+                            <td style="border: none !important; padding-bottom: 20px !important;"><div align="center">Recife, {!dataPreambulo}</div></td>
+                            <td style="border: none !important; padding-bottom: 20px !important; "><div align="right">Nome</div></td>
+                            <td style="border: none !important; padding-bottom: 20px !important; "><div align="center">&nbsp;________________________________________</div></td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important; padding-bottom: 20px !important;">&nbsp;</td>
+                            <td style="border: none !important; padding-bottom: 20px !important;"><div align="right">CPF</div></td>
+                            <td style="border: none !important; padding-bottom: 20px !important;"><div align="center">&nbsp;________________________________________</div></td>
+                        </tr>
+                        <tr>
+                            <td style="border: none !important;">&nbsp;</td>
+                            <td style="border: none !important;"><div align="right">Assinatura</div></td>
+                            <td style="border: none !important;"><div align="center">&nbsp;________________________________________</div></td>
+                        </tr>
+                    </tbody>
+                </table>
+           <!-- </div>-->
+            <!--<table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td colspan="5">
+                            <div class="textSmall">23. Responsável legal</div>
+                            <div class="caixaAlta">{! contato.Name }</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="230px">
+                            <div class="textSmall">24. Sexo</div>
+                            <b>
+                                <span>&nbsp;<span> 
+                                <apex:image url="{!URLFOR($Resource.box_selected)}" width="90" alt="PlanoClin" style="width: 20px; height: 23px;" rendered="{!IF(proposta.Opportunity.Responsavel_Legal__r.Sexo__c == 'Masculino', true, false)}"/>
+                                <apex:image url="{!URLFOR($Resource.box_unselected)}" width="90" alt="PlanoClin" style="width: 20px; height: 23px;" rendered="{!IF(proposta.Opportunity.Responsavel_Legal__r.Sexo__c != 'Masculino', true, false)}"/> 
+                                </span></span>
+                            </b>
+                            <span style="vertical-align: middle">Masculino</span>
+                            <b>
+                                <span>&nbsp;<span> 
+                                <apex:image url="{!URLFOR($Resource.box_selected)}" width="90" alt="PlanoClin" style="width: 20px; height: 23px;" rendered="{!IF(proposta.Opportunity.Responsavel_Legal__r.Sexo__c == 'Feminino', true, false)}"/>
+                                <apex:image url="{!URLFOR($Resource.box_unselected)}" width="90" alt="PlanoClin" style="width: 20px; height: 23px;" rendered="{!IF(proposta.Opportunity.Responsavel_Legal__r.Sexo__c != 'Feminino', true, false)}"/> 
+                                </span></span>
+                            </b>
+                            <span style="vertical-align: middle">Feminino&nbsp;</span>
+                        </td>
+                        <td>
+                            <div class="textSmall">25. CPF</div>
+                            <div>{! proposta.Opportunity.Responsavel_Legal__r.CPF__c }</div>
+                        </td>
+                        <td width="150px">
+                            <div class="textSmall">26. RG</div>
+                            <div>{! proposta.Opportunity.Responsavel_Legal__r.Identidade__c }</div>
+                        </td>
+                        <td>
+                            <div class="textSmall">27. Orgão Emissor</div>
+                            <div>{! proposta.Opportunity.Responsavel_Legal__r.Orgao_Emissor__c }</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5">
+                            <div class="textSmall">28. Estado Civil</div>
+                            <b>
+                                <span>&nbsp; <span>&nbsp; 
+                                <apex:image url="{!URLFOR($Resource.box_selected)}" width="90" alt="PlanoClin" style="width: 20px; height: 23px;" rendered="{!IF(proposta.Opportunity.Responsavel_Legal__r.Estado_Civil__c == 'Solteiro(a)', true, false)}"/>
+                                <apex:image url="{!URLFOR($Resource.box_unselected)}" width="90" alt="PlanoClin" style="width: 20px; height: 23px;" rendered="{!IF(proposta.Opportunity.Responsavel_Legal__r.Estado_Civil__c != 'Solteiro(a)', true, false)}"/> 
+                                &nbsp;</span> &nbsp;</span>
+                            </b>
+                            <span style="vertical-align: middle">SOLTEIRO(A)</span>
+                            <b>
+                                <span>&nbsp; <span>&nbsp; 
+                                <apex:image url="{!URLFOR($Resource.box_selected)}" width="90" alt="PlanoClin" style="width: 20px; height: 23px;" rendered="{!IF(proposta.Opportunity.Responsavel_Legal__r.Estado_Civil__c == 'Casado(a)', true, false)}"/>
+                                <apex:image url="{!URLFOR($Resource.box_unselected)}" width="90" alt="PlanoClin" style="width: 20px; height: 23px;" rendered="{!IF(proposta.Opportunity.Responsavel_Legal__r.Estado_Civil__c != 'Casado(a)', true, false)}"/>  
+                                &nbsp;</span> &nbsp;</span>
+                            </b>
+                            <span style="vertical-align: middle">CASADO(A)</span>
+                            <b>
+                                <span>&nbsp; <span>&nbsp; 
+                                <apex:image url="{!URLFOR($Resource.box_selected)}" width="90" alt="PlanoClin" style="width: 20px; height: 23px;" rendered="{!IF(proposta.Opportunity.Responsavel_Legal__r.Estado_Civil__c == 'Divorciado(a)', true, false)}"/>
+                                <apex:image url="{!URLFOR($Resource.box_unselected)}" width="90" alt="PlanoClin" style="width: 20px; height: 23px;" rendered="{!IF(proposta.Opportunity.Responsavel_Legal__r.Estado_Civil__c != 'Divorciado(a)', true, false)}"/> 
+                                &nbsp;</span> &nbsp;</span>
+                            </b>
+                            <span style="vertical-align: middle">DIVORCIADO(A)</span>
+                            <b>
+                                <span>&nbsp; <span>&nbsp; 
+                                <apex:image url="{!URLFOR($Resource.box_selected)}" width="90" alt="PlanoClin" style="width: 20px; height: 23px;" rendered="{!IF(proposta.Opportunity.Responsavel_Legal__r.Estado_Civil__c == 'Outro', true, false)}"/>
+                                <apex:image url="{!URLFOR($Resource.box_unselected)}" width="90" alt="PlanoClin" style="width: 20px; height: 23px;" rendered="{!IF(proposta.Opportunity.Responsavel_Legal__r.Estado_Civil__c != 'Outro', true, false)}"/> 
+                                &nbsp;</span> &nbsp;</span>
+                            </b>
+                            <span style="vertical-align: middle">OUTRO</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>-->
+            <!--<table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td colspan="1">
+                            <div class="textSmall">29. Local</div>
+                            <div class="caixaAlta" align="center">{! proposta.Opportunity.Account.Municipio__c }</div>
+                        </td>
+                        <td colspan="1">
+                            <div class="textSmall">30. Data</div>
+                            <div align="center">{!dataPreambulo }</div>
+                        </td>
+                        <td colspan="2">
+                            <div class="textSmall" align="center">31. Carimbo e Assinatura do Responsável Legal</div>
+                            <div style="text-align: center"><br/><br/>_________________________________</div>
+                            <div style="text-align: center">{!contato.Name}<br/>CPF: {!proposta.Opportunity.Responsavel_Legal__r.CPF__c}</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>-->
+            <!--<table style="margin-bottom: 0px !important; margin-top: 5px; width: 100%; background-color: #0196cd; color: white;">
+                <tr>
+                    <td align="center">CONTRATO DE TRANSPORTE LINK PONTO-A-PONTO</td>
+                </tr>
+            </table>-->
+        </div>
+    </body> 
+</apex:page>

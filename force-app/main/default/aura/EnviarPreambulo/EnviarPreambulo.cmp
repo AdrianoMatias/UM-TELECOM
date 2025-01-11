@@ -1,0 +1,94 @@
+<aura:component implements="force:appHostable,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickActionWithoutHeader" 
+				access="global"
+				controller="VisualizarEnvioPreambuloCTRL">
+	<aura:html tag="style">
+		.cuf-content {
+			padding: 0 0rem !important;
+		}
+		
+		.slds-p-around--medium {
+			padding: 0rem !important;
+		}       
+		
+		.slds-modal__content{
+			overflow-y:hidden !important;
+			height:unset !important;
+			max-height:unset !important;
+		}
+		
+		.slds-modal__container{
+			transform: unset !important;
+		}
+	</aura:html>
+
+	<!-- INICIO VARIAVÉIS-->
+	<aura:attribute name="listaContatos"		type="List"/>
+	<aura:attribute name="isModalOpen"			type="Boolean" default="false"/>
+	<aura:attribute name="possuiContatos"		type="Boolean" default="false"/>
+	<aura:attribute name="contadorSelecionados"	type="Integer"/>
+	<!-- FIM VARIAVÉIS-->
+
+	<aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+	 
+	<aura:renderIf isTrue="{!v.isModalOpen}">
+		<section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+			<div class="slds-modal__container">
+				<header class="slds-modal__header">
+					<h2 id="modal-heading-01" class="slds-modal__title slds-hyphenate">Selecione o(s) contato(s)</h2>
+				</header>
+				<div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+					<table class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_striped" role="grid">
+						<thead>
+							<tr class="slds-line-height_reset">
+								<th class="" scope="col">
+									<div class="slds-truncate">
+										<ui:inputCheckbox aura:id="box3" change="{!c.selecionarTodos}"/>
+									</div>
+								</th>
+								<th class="" scope="col">
+									<div class="slds-truncate" title="Nome">Nome</div>
+								</th>
+								<th class="" scope="col">
+									<div class="slds-truncate" title="Telefone">Telefone</div>
+								</th>
+								<th class="" scope="col">
+									<div class="slds-truncate" title="Email">Email</div>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+                			<aura:iteration items="{!v.listaContatos}" var="contato" indexVar="index">
+							<tr class="slds-hint-parent">
+								<td role="gridcell">
+									<div class="slds-truncate">
+										<ui:inputCheckbox aura:id="boxPack" name="{!contato.Id}" change="{!c.checkboxSelect}"/>
+									</div>
+								</td>
+								<td role="gridcell">
+									<div class="slds-truncate" title="{!contato.Name}">
+                            			<ui:outputText value="{!contato.Name}"/>
+									</div>
+								</td>
+								<td role="gridcell">
+									<div class="slds-truncate" title="{!contato.MobilePhone}">
+                            			<ui:outputText value="{!contato.MobilePhone}"/>
+									</div>
+								</td>
+								<td role="gridcell">
+									<div class="slds-truncate" title="{!contato.Email}">
+                            			<ui:outputText value="{!contato.Email}"/>
+									</div>
+								</td>
+							</tr>
+                			</aura:iteration>
+						</tbody>
+					</table>
+				</div>
+				<footer class="slds-modal__footer slds-align_absolute-left" style="background-color: #fff">
+					<lightning:button name="Enviar" label="Enviar" onclick="{!c.enviarPreambuloContato}"/>
+					<lightning:button name="Fechar" label="Fechar" onclick="{!c.fecharModal}"/>
+				</footer>
+			</div>
+		</section>
+	</aura:renderIf>
+</aura:component>

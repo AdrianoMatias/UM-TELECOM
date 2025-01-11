@@ -1,0 +1,26 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader"
+				controller="VisualizarEnvioProposta" >
+	
+<lightning:spinner variant="brand" class="slds-show backgroundSpinner" size="medium" />
+    
+    <aura:html tag="style">
+        .slds-backdrop {
+            background: rgba(43, 40, 38, 0.5) !important;
+        }
+        .backgroundSpinner{
+            background: rgba(0, 0, 0, 0) !important;
+        }
+        .modal-body {
+            background: rgba(0, 0, 0, 0) !important;
+            box-shadow: none !important;
+        }
+        .closeIcon {
+            display:none !important;
+        }
+        .desktop {
+            overflow: visible !important;
+        }
+    </aura:html>
+	<aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+	
+</aura:component>

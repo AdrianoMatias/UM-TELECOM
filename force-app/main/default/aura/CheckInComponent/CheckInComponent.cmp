@@ -1,0 +1,76 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global"
+                controller="CheckInMapCTRL">
+    
+    <aura:attribute name="compromisso"	type="Event"/>
+    <aura:attribute name="lead"			type="Lead"/>
+    <aura:attribute name="conta"		type="Account"/>
+    
+    <aura:attribute name="latitude"		type="Decimal"/>
+    <aura:attribute name="longitude"	type="Decimal"/>
+    <aura:attribute name="mapMarkers"	type="Object"/>
+    <aura:attribute name="zoomLevel"	type="Integer" default="16"/>
+    
+    <aura:attribute name="indMapaRend"	type="Boolean" default="false"/>
+    <aura:attribute name="indjustif"	type="Boolean" default="false"/>
+    <aura:attribute name="indMotiv"		type="Boolean" default="false"/>
+    
+    <aura:attribute name="motivo"		type="String"/>
+    <aura:attribute name="justificativa" type="String"/>
+    <aura:attribute name="LMotivo"		type="List"/>
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    
+    <lightning:card title="Mapa" iconName="action:map">
+        <aura:if isTrue="{!v.mapMarkers.length>0}">
+            <lightning:map mapMarkers="{!v.mapMarkers}" zoomLevel="{!v.zoomLevel}"/>
+        </aura:if>
+        <aura:set attribute="footer">
+            <div class="slds-grid slds-gutters slds-grid_vertical-align-center slds-grid_align-center">
+                <div>
+                    <div class="slds-col slds-size_1-of-1 slds-m-vertical_xx-small">
+                        <lightning:button variant="success" label="Confirmar localização" onclick="{!c.confirmar}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-m-vertical_xx-small">
+                        <lightning:button variant="brand" label="Recarregar localização" onclick="{!c.recarregar}"/>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-m-vertical_xx-small">
+                        <lightning:button label="Justificar" onclick="{!c.justificar}"/>
+                    </div>
+                    <aura:if isTrue="{!v.indMotiv}">
+                        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                            <div class="slds-modal__container">
+                                <header class="slds-modal__header">
+                                    <lightning:buttonIcon iconName="utility:close" onclick="{!c.cancelarModal}" alternativeText="fechar" variant="bare-inverse" class="slds-modal__close"/>
+                                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Selecione o motivo</h2>
+                                </header>
+                                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" >
+                                    <lightning:select aura:id="motivoSelect" name="motivoSelect" variant="label-hidden" label="Motivo" title="Motivo" value="{!v.motivo}" onchange="{!c.exibirJustificativa}">
+                                        <option text="--Nenhum--" value=""/>
+                                        <aura:iteration items="{!v.LMotivo}" var="lm">
+                                            <option text="{!lm.label}" value="{!lm.value}"/>
+                                        </aura:iteration>
+                                    </lightning:select>
+                                    <aura:if isTrue="{!v.indjustif}">
+                                        <lightning:textarea value="{!v.justificativa}" label="Justificativa" class="slds-m-vertical_xx-small"/>
+                                    </aura:if>
+                                </div>
+                                <footer class="slds-modal__footer">
+                                    <lightning:button variant="neutral" label="Cancelar" onclick="{!c.cancelarModal}"/>
+                                    <lightning:button variant="brand" label="Ok" onclick="{!c.confirmar}"/>
+                                </footer>
+                            </div>
+                        </section>
+                        <div class="slds-backdrop slds-backdrop_open"></div>
+                    </aura:if>
+                </div>
+                <div class="modal-footer slds-modal__footer slds-size_1-of-1">
+                    <div class="forceChangeRecordTypeFooter">
+                        <ui:button class="slds-button slds-button_neutral" label="Cancelar" press="{!c.cancelar}" /> 
+                        <ui:button class="slds-button slds-button--brand" label="Enviar" press="{!c.enviar}"/>
+                    </div>
+                </div>
+            </div>
+        </aura:set>
+    </lightning:card>
+</aura:component>

@@ -1,0 +1,33 @@
+[ {
+  "picklistValues" : [ {
+    "useIcon" : "true",
+    "optionValue" : "Padrão",
+    "optionLabel" : "Padrão",
+    "imageUrl" : "https://www.lightningdesignsystem.com/assets/images/logo.svg",
+    "iconName" : "utility:connected_apps",
+    "description" : "Uma OS Pai pode ter várias OS filhas (lançamento, ativação, infra, etc.)."
+  }, {
+    "useIcon" : "true",
+    "optionValue" : "Configuração lógica",
+    "optionLabel" : "Configuração lógica",
+    "imageUrl" : "https://www.lightningdesignsystem.com/assets/images/logo.svg",
+    "iconName" : "utility:light_bulb",
+    "description" : "Uma OS Pai usada para ativação do circuito e controlar o envio de materiais utilizados para o SAP. Não possui OS filhas."
+  }, {
+    "useIcon" : "true",
+    "optionValue" : "100% Parceiro",
+    "optionLabel" : "100% Parceiro",
+    "imageUrl" : "https://www.lightningdesignsystem.com/assets/images/logo.svg",
+    "iconName" : "utility:user",
+    "description" : "Uma OS Pai usada para ativação do circuito e controlar o envio de materiais utilizados para o SAP. Não possui OS filhas. Identifica o Parceiro que fez a implantaçao no cliente."
+  }, {
+    "useIcon" : "true",
+    "optionValue" : "Mista - Parceiro e UmTelecom",
+    "optionLabel" : "Mista - Parceiro e UmTelecom",
+    "imageUrl" : "https://www.lightningdesignsystem.com/assets/images/logo.svg",
+    "iconName" : "utility:groups",
+    "description" : "Uma OS Pai para controle do trabalho de parceiros externos e do envio de materiais utilizados para o SAP. Pode ter OS filhas (Lançamento, Ativação) para time interno. Identifica o Parceiro que participou da implantaçao no cliente."
+  } ],
+  "objectName" : "WorkOrder",
+  "fieldName" : "JornadaDeImplantacao__c"
+} ]

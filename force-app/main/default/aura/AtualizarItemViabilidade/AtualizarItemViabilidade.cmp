@@ -1,0 +1,18 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId" controller="ItemViabilidadeCTRL" >
+    
+    <!-- Attributes --> 
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <!-- Attributes -->
+    
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <!-- Handlers -->
+    
+    <div class="slds-is-relative">
+        <aura:renderIf isTrue="{!v.showSpinner}">
+            <!-- Lightning Spinner -->
+            <lightning:spinner alternativeText="Loading" size="small" />
+            <!-- Lightning Spinner -->
+        </aura:renderIf>
+    </div>
+</aura:component>

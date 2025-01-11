@@ -1,0 +1,8 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" controller="ConsultaCEPCTRL">
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+	<aura:html tag="style">
+        .slds-modal__container {
+            display: none   
+        }
+    </aura:html>
+</aura:component>

@@ -1,0 +1,24 @@
+<aura:component controller="Itens_do_Contrato_Class" implements="force:lightningQuickAction,force:hasRecordId">
+    <aura:attribute name="mydata" type="object"/>
+    <aura:attribute name="mycolumns" type="list"/>
+    <aura:attribute name="recordId" type="string"/>
+    <aura:attribute name="numeroDoCircuito" type="string"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+    
+    <div class="modal-header slds-modal__header">
+    	<h2 class="title slds-text-heading--medium slds-hyphenate">Itens do Contrato</h2>
+    </div>
+    
+    <div class="slds-size_xx-large slds-align_absolute-center">
+    	<lightning:datatable data="{!v.mydata }"
+        	columns="{!v.mycolumns}"
+        	keyField="id"
+        	onrowselection="{!c.getNumeroDoCircuito}"/>
+    </div>
+    
+    <div class="modal-footer slds-modal__footer slds-align_absolute-center">
+    	<lightning:button aura:id="voltar" label="Voltar" title="Retorno" onclick="{!c.button}"/>
+    	<lightning:button aura:id="prosseguir" variant="brand" label="Prosseguir" title="Progresso" onclick="{!c.button}"/>
+    </div>
+</aura:component>

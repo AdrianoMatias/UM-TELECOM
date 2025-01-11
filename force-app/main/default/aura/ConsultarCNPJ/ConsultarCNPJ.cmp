@@ -1,0 +1,43 @@
+<aura:component controller="ConsultarCNPJCtrl" implements="force:hasRecordId,force:lightningQuickActionWithoutHeader">
+    
+    <!-- Attributes --> 
+    <aura:attribute name="cnpjsList" type="String[]" />
+    <aura:attribute name="cnpj" type="String" />
+    <aura:attribute name="accId" type="String" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <!-- Attributes -->
+    
+    <!-- Handlers -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <!-- Handlers -->
+    
+    <div class="slds-is-relative">
+        <aura:renderIf isTrue="{!v.showSpinner}">
+            <!-- Lightning Spinner -->
+            <lightning:spinner alternativeText="Loading" size="small" />
+            <!-- Lightning Spinner -->
+        </aura:renderIf>
+        
+        <!-- Header -->
+        <header class="slds-modal__header">
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Você está procurando qual empresa?</h2>
+        </header>
+        <!-- Header -->
+        
+        <!-- Picklist -->
+        <lightning:select label="" aura:id="picklistCnpj" onchange="{!c.selectCNPJ}">
+            <!-- <option value="0">Selecione a empresa desejada</option> -->
+            <aura:iteration items="{!v.cnpjsList}" var="cnpj" indexVar="index">
+                <option value="{!cnpj}">{!cnpj}</option>
+            </aura:iteration>
+        </lightning:select>
+        <!-- Picklist -->
+        
+        <!-- Footer -->
+        <div class="slds-align_absolute-center">
+            <lightning:button class="margin-top_button" variant="brand" label="Selecionar" title="Selecionar" onclick="{!c.selecionarCtrl}" />
+        </div>
+        <!-- Footer -->
+    </div>
+    
+</aura:component>

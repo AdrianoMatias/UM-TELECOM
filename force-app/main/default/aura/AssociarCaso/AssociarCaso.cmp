@@ -1,0 +1,65 @@
+<aura:component controller="AssociarCasoCTRL" implements="force:hasRecordId,flexipage:availableForAllPageTypes" access="global">
+    <aura:attribute Name="recordId" type="string" />
+    <aura:attribute name="caso" type="Case"/>
+    <aura:attribute Name="idConta" type="string" />
+    <aura:attribute Name="contratos" type="List" />
+    <aura:attribute Name="itens" type="List" />
+    <aura:attribute Name="itensFiltrados" type="List" />
+    <aura:attribute Name="grupo" type="String" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    
+    <aura:renderIf isTrue="{!v.showSpinner}">
+        <!-- Lightning Spinner -->
+        <lightning:spinner alternativeText="Loading" size="small" />
+        <!-- Lightning Spinner -->
+    </aura:renderIf>
+
+        <div class="slds-grid slds-wrap slds-box" style="background: #f3f2f2;border-bottom-right-radius: inherit;border-bottom-left-radius: inherit;">
+            <div Class="slds-col slds-size_1-of-12">
+                <lightning:icon iconName="standard:account" alternativeText="Cliente" title="Cliente" size="small"/>
+            </div>
+            <div Class="slds-col slds-size_6-of-12" style="font-weight: var(--lwc-cardFontWeight,700);font-size: initial;padding-top: 0.2rem;">
+                <span > 
+                    Busca
+                </span>
+            </div>
+        </div>           
+        <div class="slds-grid slds-wrap slds-box" Style="padding-bottom: 4rem;" >
+            <lightning:recordEditForm  aura:id="recordEditForm" objectApiName="Case" recordId="{!v.recordId}">
+                <div class="slds-col slds-size_1-of-1">
+                    <lightning:inputField fieldName="AccountId" onchange="{!c.consultaContratos}" class="slds-size_1-of-1"/>
+                </div>                
+            </lightning:recordEditForm>
+            <div class="slds-col slds-size_1-of-1">
+                <lightning:input disabled="true" label="Grupo" value="{!v.grupo}"/>
+            </div>                
+            <div class="slds-col slds-size_1-of-1">
+                <lightning:select name="contratos" label="Contrato" required="false" onchange="{!c.consultarItensContrato}">
+                    <option value="">Selecione o contrato</option>
+                    <aura:iteration items="{!v.contratos}" var="contrato">
+                        <option value="{!contrato.Id}" selected="{!contrato.Id == v.caso.Contrato__c}">{!contrato.ContractNumber} ({!contrato.Status})</option>
+                    </aura:iteration>
+
+                </lightning:select>
+            </div>                
+            <div class="slds-col slds-size_1-of-1">
+                <lightning:select aura:id="item" label="Item" required="false">
+                    <option value="">Selecione o item do contrato</option>
+                    <aura:iteration items="{!v.itensFiltrados}" var="item">
+                        <option value="{!item.Id}" selected="{!item.Id == v.caso.Item_do_Contrato__c}">{!item.Contrato__r.ContractNumber}|{!item.Numero_do_circuito__c}|{!item.Produto__r.Name}|{!item.Banda__c}|{!item.Endereco_de_Destino__c}|{!item.Status__c}</option>
+                    </aura:iteration>                    
+                </lightning:select>
+            </div>   
+            <div class="slds-col slds-size_1-of-1">
+                <lightning:input name="input3" aura:id="palavraChave" label="Palavra chave" placeholder="Digite a palavra chave" oncommit="{!c.filtrarItens}"/>
+            </div>   
+            <br/>             
+            <br/>             
+            <div class="slds-col slds-size_1-of-1">
+                <br/>
+                <lightning:button variant="brand-outline" label="Associar" title="Associar" onclick="{!c.salvar}" />
+            </div>                
+        </div>
+</aura:component>
